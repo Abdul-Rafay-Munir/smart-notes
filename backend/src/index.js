@@ -9,7 +9,7 @@ const startServer = async () => {
         ${port}`);
     });
   } catch (error) {
-    console.log("MongoDB conntction failed", error);
+    console.log("MongoDB connection failed", error);
   }
 };
 
