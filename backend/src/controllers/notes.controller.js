@@ -10,8 +10,16 @@ const getNotes = async (req, res) => {
   }
 };
 
-const createNote = (req, res) => {
-  res.status(201).json({ message: "post created successfully" });
+const createNote = async (req, res) => {
+  try {
+    const { title, content } = req.body;
+
+    const note = Notes.create({ title, content });
+
+    res.status(201).json({ message: "Note created", note });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server error" });
+  }
 };
 
 const updateNote = (req, res) => {
