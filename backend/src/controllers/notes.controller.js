@@ -25,8 +25,20 @@ const createNote = async (req, res) => {
 const updateNote = async (req, res) => {
   try {
     const { title, content } = req.body;
-    await Notes.findByIdAndUpdate(req.params.id, { title, content });
+    const updatedNote = await Notes.findByIdAndUpdate(
+      req.params.id,
+      {
+        title,
+        content,
+      },
+      {
+        new: true,
+      },
+    );
 
+    if (!updatedNote) {
+      return res.status(404).json({ message: "Note not found" });
+    }
     res.status(200).json({ message: "Note successfully updated" });
   } catch (error) {
     res.status(500).json({ message: "Internal Server error", error });
