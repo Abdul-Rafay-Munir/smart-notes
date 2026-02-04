@@ -1,7 +1,18 @@
-import React from "react";
+import { Routes, Route } from "react-router";
+import { toast } from "react-hot-toast";
+
+import HomePage from "./pages/HomePage";
+import NoteDetailPage from "./pages/NoteDetailPage";
+import CreatePage from "./pages/CreatePage";
 
 const App = () => {
-  return <div>Hello World</div>;
+  return (
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/create" element={<CreatePage />} />
+        <Route path="/notedetail" element={<NoteDetailPage />} />
+      </Routes>
+  );
 };
 
 export default App;
