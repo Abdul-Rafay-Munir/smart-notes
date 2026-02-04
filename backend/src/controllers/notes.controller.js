@@ -47,7 +47,7 @@ const updateNote = async (req, res) => {
 
 const deleteNote = async (req, res) => {
   try {
-    const deletedNote = await Notes.findByIdAndUpdate(req.params.id);
+    const deletedNote = await Notes.findByIdAndDelete(req.params.id);
     if (!deletedNote) {
       return res.status(404).json({ message: "Note not found" });
     }
@@ -57,4 +57,18 @@ const deleteNote = async (req, res) => {
   }
 };
 
-export { createNote, getNotes, updateNote, deleteNote };
+const getNoteById = async (req, res) => {
+  try {
+    const note = await Notes.findById(req.params.id);
+    if (!note) {
+      return res.status(404).json({ message: "Note not found!" });
+    }
+    res.json(note);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({ message: "Internal Server error", error });
+  }
+};
+
+export { createNote, getNotes, updateNote, deleteNote, getNoteById };
