@@ -2,16 +2,32 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { ArrowLeftIcon } from "lucide-react";
 import toast from "react-hot-toast";
+import api from "../lib/axios";
 
 const CreatePage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!title || !content.trim()) {
       return toast.error("All fields are required");
+    }
+    setLoading(true);
+    try {
+      await api.post("/notes", {
+        title,
+        content,
+      });
+      toast.success("Note created successfully!");
+    } catch (error) {
+      console.log("Error creating note", error);
+
+      toast.error("Failed to create note");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,9 +64,9 @@ const CreatePage = () => {
                   <textarea
                     className="textarea textarea-bordered w-full h-32"
                     placeholder="Write your note here..."
-                    value={title}
+                    value={content}
                     onChange={(e) => {
-                      setTitle(e.target.value);
+                      setContent(e.target.value);
                     }}
                   />
                 </div>
