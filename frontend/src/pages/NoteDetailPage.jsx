@@ -35,6 +35,15 @@ const NoteDetailPage = () => {
       return;
     }
     setSaving(true);
+    try {
+      await api.put(`/notes/${id}`, note);
+      toast.success("Note updated successfully");
+    } catch (error) {
+      console.log("Error saving the note:", error);
+      toast.error("Failed to update note");
+    } finally {
+      setSaving(false);
+    }
   };
   const handlesDelete = async (e, id) => {
     e.preventDefault();
