@@ -30,23 +30,11 @@ const NoteDetailPage = () => {
   }, [id]);
 
   const handleSave = async (e) => {
-    e.preventDefault();
-
-    setLoading(true);
-    try {
-      await api.post("/notes", {
-        title,
-        content,
-      });
-      toast.success("Note created successfully!");
-      navigate("/");
-    } catch (error) {
-      console.log("Error creating note", error);
-
-      toast.error("Failed to create note");
-    } finally {
-      setLoading(false);
+    if (!note.title.trim() || !note.content.trim()) {
+      toast.error("PLease add a title or content");
+      return;
     }
+    setSaving(true);
   };
   const handlesDelete = async (e, id) => {
     e.preventDefault();
@@ -117,7 +105,11 @@ const NoteDetailPage = () => {
                 />
               </div>
               <div className="card-actions justify-end">
-                <button className="btn btn-primary" disabled={saving}>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleSave}
+                  disabled={saving}
+                >
                   {saving ? "Saving..." : "Save Changes"}
                 </button>
               </div>
