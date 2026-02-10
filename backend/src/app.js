@@ -14,4 +14,6 @@ app.use(express.json());
 app.use(rateLimiter);
 app.use("/api/notes", noteRoutes);
 
+import userRoute from "./routes/users.route.js";
+app.use("/api/users", userRoute);
 export default app;
