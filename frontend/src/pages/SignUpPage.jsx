@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { LogInIcon, EyeIcon, EyeOffIcon } from "lucide-react";
+import { UserPlus, EyeIcon, EyeOffIcon } from "lucide-react";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router";
-const SignInPage = () => {
+
+const SignUpPage = () => {
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -15,10 +18,19 @@ const SignInPage = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      if (!email || !password) {
+      if (!username || !email || !password || !confirmPassword) {
         return toast.error("All fields are required");
       }
-      const res = await api.post("/auth/signin", {
+
+      if (password.length < 6) {
+        return toast.error("Password must be at least 6 characters");
+      }
+
+      if (password !== confirmPassword) {
+        return toast.error("Passwords do not match");
+      }
+      const res = await api.post("/auth/signup", {
+        username,
         email,
         password,
       });
@@ -26,7 +38,7 @@ const SignInPage = () => {
       toast.success("Welcome back!");
       navigate("/home");
     } catch (error) {
-      console.log("Error Signing In", error);
+      console.log("Error Signing Up", error);
       toast.error("Invalid credentials");
     } finally {
       setIsLoading(false);
@@ -38,17 +50,29 @@ const SignInPage = () => {
         <div className="card-body">
           <div className="text-center mb-6">
             <div className="bg-primary/10 p-4 rounded-full w-fit mx-auto mb-4">
-              <LogInIcon className="size-8 text-primary" />
+              <UserPlus className="size-8 text-primary" />
             </div>
             <h1 className="text-3xl font-mono text-primary font-bold">
               SmartNotes
             </h1>
-            <p className="text-xl font-semibold">Welcome Back</p>
+            <p className="text-xl font-semibold">Create Account</p>
             <p className="text-base-content/70">
-              Sign in to access your account
+              Sign up to start organizing your thoughts
             </p>
           </div>
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Full username</span>
+              </label>
+              <input
+                type="text"
+                className="input input-bordered w-full"
+                placeholder="Jhon Doe"
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -89,19 +113,32 @@ const SignInPage = () => {
                 </button>
               </div>
             </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Confirm Password</span>
+              </label>
+              <input
+                type={showPassword ? "text" : "password"}
+                className="input input-bordered w-full"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+
             <button type="submit" className="btn btn-primary w-full">
               {isLoading ? (
                 <span className="loading loading-spinner"></span>
               ) : (
-                "Sign In"
+                "Create Account"
               )}
             </button>
           </form>
           <div className="divider">OR</div>
           <p className="text-center text-base-content/70">
-            Don't have an account?{" "}
-            <Link to="/signup" className="link link-primary font-semibold">
-              Create Account
+            Already have an account?{" "}
+            <Link to="/signin" className="link link-primary font-semibold">
+              Sign In
             </Link>
           </p>
         </div>
@@ -110,4 +147,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default SignUpPage;
