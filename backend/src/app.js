@@ -15,5 +15,5 @@ app.use(rateLimiter);
 app.use("/api/notes", noteRoutes);
 
 import userRoute from "./routes/users.route.js";
-app.use("/api/users", userRoute);
+app.use("/api/auth", userRoute);
 export default app;
