@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams, Link } from "react-router";
 import api from "../lib/axios";
 import { LoaderIcon, ArrowLeftIcon, Trash2Icon } from "lucide-react";
+import { isAuthenticated } from "../lib/utilis";
 
 const NoteDetailPage = () => {
   const [note, setNote] = useState(null);
@@ -28,6 +29,12 @@ const NoteDetailPage = () => {
 
     fetchNote();
   }, [id]);
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/signin");
+    }
+  }, []);
 
   const handleSave = async (e) => {
     if (!note.title.trim() || !note.content.trim()) {

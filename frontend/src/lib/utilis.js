@@ -5,3 +5,7 @@ export function formatDate(date) {
     year: "numeric",
   });
 }
+
+export const isAuthenticated = () => {
+  return !!localStorage.getItem("token");
+};

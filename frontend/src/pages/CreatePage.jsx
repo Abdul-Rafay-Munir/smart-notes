@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import { ArrowLeftIcon } from "lucide-react";
 import toast from "react-hot-toast";
 import api from "../lib/axios";
+import { isAuthenticated } from "../lib/utilis";
 
 const CreatePage = () => {
   const [title, setTitle] = useState("");
@@ -10,6 +11,12 @@ const CreatePage = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/signin");
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,7 +81,11 @@ const CreatePage = () => {
                   />
                 </div>
                 <div className="card-actions justify-end">
-                  <button className="btn btn-primary" disabled={loading}>
+                  <button
+                    className="btn btn-primary"
+                    disabled={loading}
+                    type="submit"
+                  >
                     {loading ? "Creating..." : "Create Note"}
                   </button>
                 </div>

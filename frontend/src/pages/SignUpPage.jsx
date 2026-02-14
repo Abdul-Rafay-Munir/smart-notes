@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UserPlus, EyeIcon, EyeOffIcon } from "lucide-react";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router";
+import { isAuthenticated } from "../lib/utilis";
 
 const SignUpPage = () => {
   const [username, setUserName] = useState("");
@@ -13,6 +14,12 @@ const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate("/");
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,8 +42,8 @@ const SignUpPage = () => {
         password,
       });
 
-      toast.success("Welcome back!");
-      navigate("/home");
+      toast.success("Account created successfully. Please sign in.");
+      navigate("/signin");
     } catch (error) {
       console.log("Error Signing Up", error);
       toast.error("Invalid credentials");

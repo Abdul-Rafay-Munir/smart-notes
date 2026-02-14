@@ -1,6 +1,6 @@
 import express from "express";
 import noteRoutes from "./routes/notes.route.js";
-import rateLimiter from "./middleware/rateLimiter.js";
+import rateLimiter from "./middlewares/rateLimiter.js";
 import cors from "cors";
 
 const app = express();

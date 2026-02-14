@@ -1,4 +1,5 @@
 import { User } from "../models/users.models.js";
+import generateToken from "../utils/generateTokens.js";
 
 const registerUser = async (req, res) => {
   try {
@@ -22,11 +23,12 @@ const registerUser = async (req, res) => {
         id: user._id,
         name: user.username,
         email: user.email,
-        password: user.password,
       },
     });
   } catch (error) {
-    res.status(500).json({ message: "Internal server error", error });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
 };
 
@@ -52,13 +54,16 @@ const loginUser = async (req, res) => {
 
     res.status(200).json({
       message: "User loggedin successfully",
+      token: generateToken(user._id),
       user: {
         id: user._id,
         email: user.email,
       },
     });
   } catch (error) {
-    res.status(500).json({ message: "Internal server error", error });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
 };
 

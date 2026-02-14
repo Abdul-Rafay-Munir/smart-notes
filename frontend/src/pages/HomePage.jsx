@@ -5,12 +5,14 @@ import RateLimitedUI from "../components/RateLimitedUI";
 import NotesNotFound from "../components/NotesNotFound";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
+import { isAuthenticated } from "../lib/utilis";
+import { useNavigate } from "react-router";
 
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchNotes = async () => {
       try {
@@ -19,7 +21,7 @@ const HomePage = () => {
         setIsRateLimited(false);
       } catch (error) {
         console.log("Error fetching Notes", error);
-        if (error.response.status === 429) {
+        if (error.response?.status === 429) {
           setIsRateLimited(true);
         } else {
           toast.error("Failed to load notes");
@@ -30,6 +32,13 @@ const HomePage = () => {
     };
     fetchNotes();
   }, []);
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/signin");
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-base-200">
       <Navbar />

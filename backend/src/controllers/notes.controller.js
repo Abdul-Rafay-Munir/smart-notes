@@ -2,11 +2,13 @@ import { Notes } from "../models/notes.model.js";
 
 const getNotes = async (req, res) => {
   try {
-    const notes = await Notes.find();
+    const notes = await Notes.find({ user: req.user._id });
 
     res.status(200).json({ notes });
   } catch (error) {
-    res.status(500).json({ message: "Internal Server error", error });
+    res
+      .status(500)
+      .json({ message: "Internal Server error", error: error.message });
   }
 };
 
@@ -14,7 +16,7 @@ const createNote = async (req, res) => {
   try {
     const { title, content } = req.body;
 
-    const note = Notes.create({ title, content });
+    const note = Notes.create({ title, content, user: req.user._id });
 
     res.status(201).json({ message: "Note created", note: note });
   } catch (error) {
