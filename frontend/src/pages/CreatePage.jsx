@@ -14,9 +14,9 @@ const CreatePage = () => {
 
   useEffect(() => {
     if (!isAuthenticated()) {
-      navigate("/signin");
+      navigate("/signin", { replace: true });
     }
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

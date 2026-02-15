@@ -14,6 +14,10 @@ const HomePage = () => {
   const [notes, setNotes] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/signin", { replace: true });
+      return;
+    }
     const fetchNotes = async () => {
       try {
         const res = await api.get("/notes");
@@ -31,13 +35,7 @@ const HomePage = () => {
       }
     };
     fetchNotes();
-  }, []);
-
-  useEffect(() => {
-    if (!isAuthenticated()) {
-      navigate("/signin");
-    }
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-base-200">

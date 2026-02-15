@@ -15,6 +15,10 @@ const NoteDetailPage = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/signin", { replace: true });
+      return;
+    }
     const fetchNote = async () => {
       try {
         const res = await api.get(`/notes/${id}`);
@@ -28,13 +32,7 @@ const NoteDetailPage = () => {
     };
 
     fetchNote();
-  }, [id]);
-
-  useEffect(() => {
-    if (!isAuthenticated()) {
-      navigate("/signin");
-    }
-  }, []);
+  }, [id, navigate]);
 
   const handleSave = async (e) => {
     if (!note.title.trim() || !note.content.trim()) {
