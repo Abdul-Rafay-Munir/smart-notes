@@ -19,11 +19,6 @@ Each user can sign up, log in, and manage their own notes — create, update, de
 ✔ Delete notes
 ✔ Only logged-in users can see their own notes
 
-💡 UX Improvements
-✔ Navigation bar with logout
-✔ Client-side route protection
-✔ Real-time frontend feedback (toasts)
-
 ---
 
 ## 📦 Tech Stack
