@@ -21,7 +21,7 @@ const HomePage = () => {
     const fetchNotes = async () => {
       try {
         const res = await api.get("/notes");
-        setNotes(res.data.notes);
+        setNotes(res.data.notes || []);
         setIsRateLimited(false);
       } catch (error) {
         console.log("Error fetching Notes", error);
