@@ -10,6 +10,7 @@ app.use(
     origin: "",
   }),
 );
+app.options("/*", cors());
 app.use(express.json());
 app.use(rateLimiter);
 app.use("/api/notes", noteRoutes);
