@@ -7,7 +7,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: "",
+    origin: "https://smart-notes-ebon.vercel.app",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 app.options("/*", cors());
