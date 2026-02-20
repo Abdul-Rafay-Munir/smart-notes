@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(PORT, () => {
+    app.listen(PORT, "0.0.0.0", ()=> {
       console.log(`Server is listening on
         ${PORT}`);
     });
