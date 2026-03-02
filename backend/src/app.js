@@ -7,7 +7,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://smart-notes-chi.vercel.app/",
+    origin: "https://smart-notes-chi.vercel.app",
   }),
 );
 app.use(express.json());
