@@ -23,7 +23,7 @@ const Navbar = () => {
             {loggedIn && (
               <Link to={"/create"} className="btn btn-primary btn-sm sm:btn-md">
                 <PlusIcon className="size-5" />
-                <span>New Note</span>
+                <span className="hidden sm:inline">New Note</span>
               </Link>
             )}
             {loggedIn && (
@@ -31,13 +31,13 @@ const Navbar = () => {
                 className="btn btn-ghost btn-sm sm:btn-md"
                 onClick={handleLogout}
               >
-                {" "}
-                <LogOutIcon className="size-5" /> Logout
+                <LogOutIcon className="size-5" />
+                <span className="hidden sm:inline">Logout</span>
               </button>
             )}
             {!loggedIn && (
               <Link to="/signin" className="btn btn-primary btn-sm sm:btn-md">
-                Sign In
+                <span className="hidden sm:inline">Sign In</span>
               </Link>
             )}
           </div>
