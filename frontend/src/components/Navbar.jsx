@@ -18,22 +18,25 @@ const Navbar = () => {
           <h1 className="text-3xl font-bold text-primary font-mono tracking-tight">
             SmartNotes
           </h1>
-          <div className="flex justify-center items-center gap-4">
+          <div className="flex justify-center items-center gap-2 sm:gap-4">
             {" "}
             {loggedIn && (
-              <Link to={"/create"} className="btn btn-primary">
+              <Link to={"/create"} className="btn btn-primary btn-sm sm:btn-md">
                 <PlusIcon className="size-5" />
                 <span>New Note</span>
               </Link>
             )}
             {loggedIn && (
-              <button className="btn btn-ghost" onClick={handleLogout}>
+              <button
+                className="btn btn-ghost btn-sm sm:btn-md"
+                onClick={handleLogout}
+              >
                 {" "}
                 <LogOutIcon className="size-5" /> Logout
               </button>
             )}
             {!loggedIn && (
-              <Link to="/signin" className="btn btn-primary">
+              <Link to="/signin" className="btn btn-primary btn-sm sm:btn-md">
                 Sign In
               </Link>
             )}
